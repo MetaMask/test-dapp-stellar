@@ -6,19 +6,19 @@ import { vi } from 'vitest';
  * which fails in ESM context. We mock the entire wallet kit modules to avoid this.
  */
 vi.mock('@creit.tech/stellar-wallets-kit/modules/freighter', () => ({
-  FreighterModule: vi.fn(function () {
+  FreighterModule: vi.fn(function (this: { productId: string }) {
     this.productId = 'freighter';
   }),
 }));
 
 vi.mock('@creit.tech/stellar-wallets-kit/modules/lobstr', () => ({
-  LobstrModule: vi.fn(function () {
+  LobstrModule: vi.fn(function (this: { productId: string }) {
     this.productId = 'lobstr';
   }),
 }));
 
 vi.mock('@creit.tech/stellar-wallets-kit/modules/wallet-connect', () => ({
-  WalletConnectModule: vi.fn(function () {
+  WalletConnectModule: vi.fn(function (this: { productId: string }) {
     this.productId = 'wallet-connect';
   }),
 }));
