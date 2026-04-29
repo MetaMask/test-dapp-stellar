@@ -39,8 +39,7 @@ export const SignTransaction: FC = () => {
         address,
       });
       if (result.error) {
-        const errorMessage =
-          result.error.code === -4 ? 'The user rejected this request.' : result.error.message;
+        const errorMessage = result.error.code === -4 ? 'The user rejected this request.' : result.error.message;
         console.error('Sign transaction error:', errorMessage);
         setError(errorMessage);
         return;
