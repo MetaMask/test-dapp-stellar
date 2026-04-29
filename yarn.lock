@@ -740,42 +740,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jsr/creit-tech__stellar-wallets-kit@npm:^2":
-  version: 2.1.0
-  resolution: "@jsr/creit-tech__stellar-wallets-kit@npm:2.1.0::__archiveUrl=https%3A%2F%2Fnpm.jsr.io%2F~%2F11%2F%40jsr%2Fcreit-tech__stellar-wallets-kit%2F2.1.0.tgz"
-  dependencies:
-    "@albedo-link/intent": "npm:0.12.0"
-    "@creit.tech/xbull-wallet-connect": "npm:0.4.0"
-    "@hot-wallet/sdk": "npm:1.0.11"
-    "@jsr/std__encoding": "npm:1.0.10"
-    "@ledgerhq/hw-app-str": "npm:7.2.8"
-    "@ledgerhq/hw-transport": "npm:6.31.12"
-    "@ledgerhq/hw-transport-webusb": "npm:6.29.12"
-    "@lobstrco/signer-extension-api": "npm:2.0.0"
-    "@preact/signals": "npm:2.9.0"
-    "@reown/appkit": "npm:1.8.19"
-    "@stellar/freighter-api": "npm:6.0.0"
-    "@stellar/stellar-base": "npm:14.0.1"
-    "@trezor/connect-plugin-stellar": "npm:9.2.6"
-    "@trezor/connect-web": "npm:9.7.2"
-    "@twind/core": "npm:1.1.3"
-    "@twind/preset-autoprefix": "npm:1.0.7"
-    "@twind/preset-tailwind": "npm:1.1.4"
-    "@walletconnect/sign-client": "npm:2.23.0"
-    "@walletconnect/types": "npm:2.23.9"
-    htm: "npm:3.1.1"
-    preact: "npm:^10.29.0"
-  checksum: 10/bed2b21cea242b1e595e53bd54d337973ed5f11f2803fc3cec25f15670dc82ced59ae29758e9b50953c2369d516fbd7d524702ed5797e8fbb633891bc2b750a0
-  languageName: node
-  linkType: hard
-
-"@jsr/std__encoding@npm:1.0.10":
-  version: 1.0.10
-  resolution: "@jsr/std__encoding@npm:1.0.10::__archiveUrl=https%3A%2F%2Fnpm.jsr.io%2F~%2F11%2F%40jsr%2Fstd__encoding%2F1.0.10.tgz"
-  checksum: 10/366345edda7bf08389687ccf9c09af3cc72ef08acf223ace2158e81d530619b937ad811049d163a2c902d9e2da139d660a5bd63d2a40674173ccb7eb60b6c4b0
-  languageName: node
-  linkType: hard
-
 "@lavamoat/aa@npm:^4.3.6":
   version: 4.3.6
   resolution: "@lavamoat/aa@npm:4.3.6"
@@ -933,7 +897,6 @@ __metadata:
   dependencies:
     "@biomejs/biome": "npm:^1.8.3"
     "@creit.tech/stellar-wallets-kit": "npm:^2.1.0"
-    "@jsr/creit-tech__stellar-wallets-kit": "npm:^2"
     "@lavamoat/allow-scripts": "npm:^3.0.4"
     "@lavamoat/preinstall-always-fail": "npm:^2.0.0"
     "@reown/appkit": "npm:^1.8.19"

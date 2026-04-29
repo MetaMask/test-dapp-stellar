@@ -1,8 +1,8 @@
-import { FreighterModule } from '@jsr/creit-tech__stellar-wallets-kit/modules/freighter';
-import { LobstrModule } from '@jsr/creit-tech__stellar-wallets-kit/modules/lobstr';
-import { WalletConnectModule } from '@jsr/creit-tech__stellar-wallets-kit/modules/wallet-connect';
-import { StellarWalletsKit } from '@jsr/creit-tech__stellar-wallets-kit/sdk';
-import { KitEventType, type ModuleInterface, type Networks } from '@jsr/creit-tech__stellar-wallets-kit/types';
+import { FreighterModule } from '@creit.tech/stellar-wallets-kit/modules/freighter';
+import { LobstrModule } from '@creit.tech/stellar-wallets-kit/modules/lobstr';
+import { WalletConnectModule } from '@creit.tech/stellar-wallets-kit/modules/wallet-connect';
+import { StellarWalletsKit } from '@creit.tech/stellar-wallets-kit/sdk';
+import { KitEventType, type ModuleInterface, type Networks } from '@creit.tech/stellar-wallets-kit/types';
 import { type FC, type ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { STELLAR_NETWORKS } from '../config';
 import { useNetwork } from './NetworkContext';

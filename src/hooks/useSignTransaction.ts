@@ -1,4 +1,4 @@
-import { StellarWalletsKit } from '@jsr/creit-tech__stellar-wallets-kit/sdk';
+import { StellarWalletsKit } from '@creit.tech/stellar-wallets-kit/sdk';
 import { useCallback } from 'react';
 
 export function useSignTransaction() {
