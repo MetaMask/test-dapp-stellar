@@ -22,6 +22,15 @@ export const STELLAR_NETWORKS = {
 export type NetworkKey = keyof typeof STELLAR_NETWORKS;
 
 /**
+ * USDC contract addresses on Stellar networks
+ */
+export const USDC_ISSUERS: Record<NetworkKey, string> = {
+  pubnet: 'GBUQWP3BOUZX34ULNQG23RQ6F4YUSXHTQSXUSMIQ4B2LAMSTFSRXUUF',
+  testnet: 'GBBD47UZQ5IOYQA6MKGA74AYEKP4UXE7DDKWUV7IGVJXW3YYQXK4BYC2',
+  futurenet: 'GBUQWP3BOUZX34ULNQG23RQ6F4YUSXHTQSXUSMIQ4B2LAMSTFSRXUUF',
+};
+
+/**
  * The default network to use in the tests.
  */
 export const DEFAULT_NETWORK: NetworkKey = 'testnet';

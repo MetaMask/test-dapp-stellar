@@ -58,5 +58,12 @@ export const dataTestIds = pathifyObject({
       signAuthEntry: true,
       signedAuthEntry: true,
     },
+    sendUsdc: {
+      id: true,
+      recipient: true,
+      amount: true,
+      sendUsdc: true,
+      hash: true,
+    },
   },
 } as const);

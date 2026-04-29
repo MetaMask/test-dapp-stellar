@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import { Header } from '../components/Header';
+import { SendUsdc } from '../components/SendUsdc';
 import { SignAuthEntry } from '../components/SignAuthEntry';
 import { SignMessage } from '../components/SignMessage';
 import { SignTransaction } from '../components/SignTransaction';
@@ -16,14 +17,17 @@ export const TestPage: FC = () => {
         <Header />
       </div>
       <div className="grid">
+        <Test key="signMessage" title="Sign Message">
+          <SignMessage />
+        </Test>
+        <Test key="sendUsdc" title="Send USDC">
+          <SendUsdc />
+        </Test>
         <Test key="signTransaction" title="Sign Transaction">
           <SignTransaction />
         </Test>
         <Test key="signAuthEntry" title="Sign Auth Entry (Soroban)">
           <SignAuthEntry />
-        </Test>
-        <Test key="signMessage" title="Sign Message">
-          <SignMessage />
         </Test>
       </div>
     </div>
