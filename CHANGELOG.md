@@ -7,46 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.3.1]
-
-### Fixed
-
-- fix: don't export unnecessary dependencies ([#28](https://github.com/MetaMask/test-dapp-tron/pull/28))
-
-## [0.3.0]
-
-### Changed
-
-- chore: update @metamask/connect-tron to version 0.3.0 ([#26](https://github.com/MetaMask/test-dapp-tron/pull/26))
-
-## [0.2.2]
-
-### Changed
-
-- Update data test ids for transactions ([#18](https://github.com/MetaMask/test-dapp-tron/pull/18))
-
-## [0.2.1]
-
 ### Added
 
-- Added missing `data-testid` fields ([#14](https://github.com/MetaMask/test-dapp-tron/pull/14))
+- Initial repository setup for the Stellar test dapp.
+- Add Sign Transaction test flow.
+- Add Sign Message test flow.
+- Add Sign Auth Entry (Soroban) test flow.
+- Add Send USDC test flow.
 
-## [0.2.0]
-
-### Added
-
-- Add MM adapter ([#10](https://github.com/MetaMask/test-dapp-tron/pull/10))
-
-## [0.1.0]
-
-### Changed
-
-- Initial release
-
-[Unreleased]: https://github.com/MetaMask/test-dapp-tron/compare/v0.3.1...HEAD
-[0.3.1]: https://github.com/MetaMask/test-dapp-tron/compare/v0.3.0...v0.3.1
-[0.3.0]: https://github.com/MetaMask/test-dapp-tron/compare/v0.2.2...v0.3.0
-[0.2.2]: https://github.com/MetaMask/test-dapp-tron/compare/v0.2.1...v0.2.2
-[0.2.1]: https://github.com/MetaMask/test-dapp-tron/compare/v0.2.0...v0.2.1
-[0.2.0]: https://github.com/MetaMask/test-dapp-tron/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/MetaMask/test-dapp-tron/releases/tag/v0.1.0
+[Unreleased]: https://github.com/MetaMask/test-dapp-stellar/compare/v0.0.0...HEAD
