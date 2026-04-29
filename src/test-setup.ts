@@ -45,7 +45,9 @@ vi.mock('@creit.tech/stellar-wallets-kit/sdk', () => {
         return () => {
           const callbacks = eventListeners.get(event)!;
           const idx = callbacks.indexOf(callback);
-          if (idx !== -1) callbacks.splice(idx, 1);
+          if (idx !== -1) {
+            callbacks.splice(idx, 1);
+          }
         };
       }),
       setWallet: vi.fn(() => {}),
