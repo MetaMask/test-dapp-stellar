@@ -927,22 +927,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/connect-stellar@file:../connect-stellar::locator=%40metamask%2Ftest-dapp-stellar%40workspace%3A.":
-  version: 0.1.0
-  resolution: "@metamask/connect-stellar@file:../connect-stellar#../connect-stellar::hash=93d47b&locator=%40metamask%2Ftest-dapp-stellar%40workspace%3A."
-  dependencies:
-    "@metamask/multichain-api-client": "npm:^0.11.0"
-  checksum: 10/bbb3f8f2fe04564745d27828a40869c064bdf7541d8c423285ffc6dbbe5fd2baa7ad4c18d10914a240f4ab151d9d63e569462a0db1bb91e26db09e572cf9678c
-  languageName: node
-  linkType: hard
-
-"@metamask/multichain-api-client@npm:^0.11.0":
-  version: 0.11.0
-  resolution: "@metamask/multichain-api-client@npm:0.11.0"
-  checksum: 10/fee3751b8bfdce08db37be205aa2d78de6544060ccbe57ff790ddf9c0aad830ee6cfb1844e4ea838ce97f0b7851badd0271cb0ec32ac42d3f7d4cfa15ccb1298
-  languageName: node
-  linkType: hard
-
 "@metamask/test-dapp-stellar@workspace:.":
   version: 0.0.0-use.local
   resolution: "@metamask/test-dapp-stellar@workspace:."
@@ -952,7 +936,6 @@ __metadata:
     "@jsr/creit-tech__stellar-wallets-kit": "npm:^2"
     "@lavamoat/allow-scripts": "npm:^3.0.4"
     "@lavamoat/preinstall-always-fail": "npm:^2.0.0"
-    "@metamask/connect-stellar": "file:../connect-stellar"
     "@reown/appkit": "npm:^1.8.19"
     "@testing-library/dom": "npm:^10.4.0"
     "@testing-library/react": "npm:^16.3.0"

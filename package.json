@@ -49,7 +49,6 @@
   "dependencies": {
     "@creit.tech/stellar-wallets-kit": "^2.1.0",
     "@jsr/creit-tech__stellar-wallets-kit": "^2",
-    "@metamask/connect-stellar": "file:../connect-stellar",
     "@reown/appkit": "^1.8.19",
     "@walletconnect/sign-client": "^2.23.9",
     "@walletconnect/types": "^2.23.9"
