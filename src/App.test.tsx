@@ -4,6 +4,6 @@ import { App } from './App';
 
 test('renders connect button', () => {
   render(<App />);
-  const button = screen.getByText(/Connect MetaMask/iu);
+  const button = screen.getByText(/Connect Wallet/iu);
   expect(button).toBeDefined();
 });
