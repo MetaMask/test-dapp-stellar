@@ -20,6 +20,7 @@ export const SignTransaction: FC = () => {
   const [signedTransaction, setSignedTransaction] = useState<string | undefined>();
   const [xdr, setXdr] = useState<string>('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>();
 
   /**
    * Sign the transaction using the active wallet.
@@ -29,6 +30,8 @@ export const SignTransaction: FC = () => {
       throw new Error('Wallet not connected or XDR missing');
     }
 
+    setError(undefined);
+    setSignedTransaction(undefined);
     setLoading(true);
     try {
       const result = await signTransaction(xdr, {
@@ -36,13 +39,17 @@ export const SignTransaction: FC = () => {
         address,
       });
       if (result.error) {
-        console.error('Sign transaction error:', result.error.message);
+        const errorMessage =
+          result.error.code === -4 ? 'The user rejected this request.' : result.error.message;
+        console.error('Sign transaction error:', errorMessage);
+        setError(errorMessage);
         return;
       }
       setSignedTransaction(result.signedTxXdr);
     } catch (error) {
-      console.error('Error signing transaction:', error);
-      throw error;
+      const message = error instanceof Error ? error.message : 'Unknown signing error';
+      console.error('Error signing transaction:', message);
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -88,6 +95,8 @@ export const SignTransaction: FC = () => {
           Sign Transaction
         </Button>
       </div>
+
+      {error && <p style={{ color: '#b71c1c', fontStyle: 'italic' }}>{error}</p>}
 
       {signedTransaction && (
         <>
