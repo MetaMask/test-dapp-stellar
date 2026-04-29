@@ -13,7 +13,7 @@ A test dapp for the MetaMask Multichain API on Tron.
 
 ```bash
 git clone <repository-url>
-cd test-dapp-tron
+cd test-dapp-stellar
 yarn install
 ```
 
