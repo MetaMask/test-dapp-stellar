@@ -21,16 +21,19 @@
     "dist/"
   ],
   "scripts": {
-    "dev": "vite --host 0.0.0.0 --port 8082",
+    "dev": "vite --host 0.0.0.0 --port 8081",
     "build": "tsc -b && vite build && tsc --project tsconfig.test.json --outDir dist",
     "format": "biome format",
     "format:fix": "biome format --write",
-    "lint": "yarn lint:biome && yarn format && yarn lint:misc --check",
+    "lint": "yarn lint:biome && yarn format && yarn lint:constraints && yarn lint:misc --check && yarn lint:dependencies --check && yarn lint:changelog",
+    "lint:changelog": "auto-changelog validate --prettier",
+    "lint:constraints": "yarn constraints",
+    "lint:dependencies": "depcheck --ignores=@reown/appkit,@walletconnect/sign-client,@walletconnect/types,@lavamoat/allow-scripts,@lavamoat/preinstall-always-fail && yarn dedupe",
     "lint:biome": "biome check",
-    "lint:fix": "yarn lint:biome --fix && yarn format:fix && yarn lint:misc --write",
+    "lint:fix": "yarn lint:biome --fix && yarn format:fix && yarn lint:constraints --fix && yarn lint:misc --write && yarn lint:dependencies && yarn lint:changelog",
     "lint:misc": "prettier '**/*.json' '**/*.md' '**/*.yml' '!.yarnrc.yml' --ignore-path .gitignore --no-error-on-unmatched-pattern",
     "prepack": "./scripts/prepack.sh",
-    "start": "vite preview --port 8082",
+    "start": "vite preview --port 8081",
     "test": "vitest",
     "test:watch": "vitest --watch"
   },
@@ -49,13 +52,16 @@
   "dependencies": {
     "@creit.tech/stellar-wallets-kit": "^2.1.0",
     "@reown/appkit": "^1.8.19",
+    "@stellar/stellar-sdk": "^15.0.1",
     "@walletconnect/sign-client": "^2.23.9",
-    "@walletconnect/types": "^2.23.9"
+    "@walletconnect/types": "^2.23.9",
+    "depcheck": "^1.4.7"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "@lavamoat/allow-scripts": "^3.0.4",
     "@lavamoat/preinstall-always-fail": "^2.0.0",
+    "@metamask/auto-changelog": "^5.0.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
     "@types/react": "^18.3.12",
@@ -95,7 +101,10 @@
       "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/transport>usb": false,
       "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/utxo-lib>blake-hash": false,
       "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/utxo-lib>tiny-secp256k1": false,
-      "@reown/appkit": false
+      "@reown/appkit": false,
+      "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/blockchain-link-utils>@stellar/stellar-sdk": false,
+      "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/blockchain-link>@stellar/stellar-sdk": false,
+      "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/blockchain-link>@trezor/blockchain-link-utils>@stellar/stellar-sdk": false
     }
   }
 }

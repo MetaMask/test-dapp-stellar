@@ -15,4 +15,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Sign Auth Entry (Soroban) test flow.
 - Add Send USDC test flow.
 
-[Unreleased]: https://github.com/MetaMask/test-dapp-stellar/compare/v0.0.0...HEAD
+[Unreleased]: https://github.com/MetaMask/test-dapp-stellar/
