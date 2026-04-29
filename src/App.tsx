@@ -1,13 +1,9 @@
 import type { FC } from 'react';
 import { NetworkProvider } from './contexts/NetworkContext';
 import { WalletProvider } from './contexts/WalletContext';
-import { WalletModeProvider, useWalletMode } from './contexts/WalletModeContext';
-import { useAutoReconnect } from './hooks/useAutoReconnect';
 import { TestPage } from './pages/TestPage';
 
 const AppInner: FC = () => {
-  useAutoReconnect();
-
   return (
     <div
       style={{
@@ -35,22 +31,12 @@ const AppInner: FC = () => {
   );
 };
 
-const AppContent: FC = () => {
-  const { mode } = useWalletMode();
-
-  return (
-    <WalletProvider key={mode}>
-      <AppInner />
-    </WalletProvider>
-  );
-};
-
 export const App: FC = () => {
   return (
-    <WalletModeProvider>
-      <NetworkProvider>
-        <AppContent />
-      </NetworkProvider>
-    </WalletModeProvider>
+    <NetworkProvider>
+      <WalletProvider>
+        <AppInner />
+      </WalletProvider>
+    </NetworkProvider>
   );
 };

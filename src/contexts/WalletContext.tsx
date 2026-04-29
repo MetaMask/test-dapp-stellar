@@ -1,24 +1,12 @@
+import { FreighterModule } from '@jsr/creit-tech__stellar-wallets-kit/modules/freighter';
+import { LobstrModule } from '@jsr/creit-tech__stellar-wallets-kit/modules/lobstr';
 import { WalletConnectModule } from '@jsr/creit-tech__stellar-wallets-kit/modules/wallet-connect';
 import { StellarWalletsKit } from '@jsr/creit-tech__stellar-wallets-kit/sdk';
 import { KitEventType, type ModuleInterface, type Networks } from '@jsr/creit-tech__stellar-wallets-kit/types';
 import { MetaMaskModule } from '@metamask/connect-stellar';
-import type { MetaMaskStellarAdapter } from '@metamask/connect-stellar';
-import {
-  type FC,
-  type ReactNode,
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { type FC, type ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { STELLAR_NETWORKS } from '../config';
 import { useNetwork } from './NetworkContext';
-import { type WalletMode, useWalletMode } from './WalletModeContext';
-
-// ── WalletConnect constants ──────────────────────────────────────────
 
 const WC_PROJECT_ID = (import.meta.env.VITE_WALLETCONNECT_PROJECT_ID as string | undefined) ?? '';
 
@@ -29,14 +17,10 @@ const WC_METADATA = {
   icons: [],
 };
 
-// ── Context type ─────────────────────────────────────────────────────
-
 export interface WalletStateContextValue {
-  mode: WalletMode;
   address: string | null;
   connected: boolean;
   connecting: boolean;
-  adapter: MetaMaskStellarAdapter | null;
   setAddress: (addr: string | null) => void;
   setConnected: (v: boolean) => void;
   setConnecting: (v: boolean) => void;
@@ -52,10 +36,7 @@ export function useWalletState(): WalletStateContextValue {
   return ctx;
 }
 
-// ── Provider ─────────────────────────────────────────────────────────
-
 export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const { mode } = useWalletMode();
   const { selectedNetwork } = useNetwork();
 
   const [address, setAddress] = useState<string | null>(null);
@@ -67,61 +48,24 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setConnected(false);
   }, []);
 
-  // ── SEP-0043: adapter ref ──────────────────────────────────────────
-  const moduleRef = useRef<MetaMaskModule | null>(mode === 'sep043' ? new MetaMaskModule() : null);
-  const adapter: MetaMaskStellarAdapter | null = mode === 'sep043' ? (moduleRef.current?.adapter ?? null) : null;
-
-  // ── SEP-0043: disconnect on unmount ────────────────────────────────
+  // Initialize kit once on mount
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (mode !== 'sep043' || !moduleRef.current) {
-      return;
-    }
-    const mod = moduleRef.current;
-    return () => {
-      void mod.disconnect().catch(() => undefined);
-    };
-  }, [mode]);
-
-  // ── SEP-0043: adapter events ───────────────────────────────────────
-  useEffect(() => {
-    if (mode !== 'sep043' || !adapter) {
-      return;
-    }
-    const onConnect = (data: unknown): void => {
-      setAddress(data as string);
-      setConnected(true);
-    };
-    const onAccountsChanged = (data: unknown): void => {
-      const addr = data as string | null;
-      setAddress(addr);
-      setConnected(!!addr);
-    };
-    const onDisconnect = (): void => resetState();
-
-    adapter.on('connect', onConnect);
-    adapter.on('accountsChanged', onAccountsChanged);
-    adapter.on('disconnect', onDisconnect);
-    return () => {
-      adapter.off('connect', onConnect);
-      adapter.off('accountsChanged', onAccountsChanged);
-      adapter.off('disconnect', onDisconnect);
-    };
-  }, [mode, adapter, resetState]);
-
-  // ── SWK: initialize kit ────────────────────────────────────────────
-  useEffect(() => {
-    if (mode !== 'kit-module') {
-      return;
-    }
-
     const modules: ModuleInterface[] = [
-      new MetaMaskModule() as unknown as ModuleInterface,
+      new MetaMaskModule(),
+      new FreighterModule(),
+      new LobstrModule(),
       ...(WC_PROJECT_ID ? [new WalletConnectModule({ projectId: WC_PROJECT_ID, metadata: WC_METADATA })] : []),
     ];
 
     StellarWalletsKit.init({
       modules,
       network: STELLAR_NETWORKS[selectedNetwork].networkPassphrase as Networks,
+    });
+
+    // Track which wallet is selected
+    const unsubWalletSelected = StellarWalletsKit.on(KitEventType.WALLET_SELECTED, (event) => {
+      localStorage.setItem('lastWalletId', event.payload.id!);
     });
 
     const unsubState = StellarWalletsKit.on(KitEventType.STATE_UPDATED, (event) => {
@@ -131,29 +75,51 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
     });
 
     const unsubDisconnect = StellarWalletsKit.on(KitEventType.DISCONNECT, () => {
+      localStorage.removeItem('lastWalletId');
       resetState();
     });
 
+    // Restore connection on mount
+    const lastWalletId = localStorage.getItem('lastWalletId');
+    if (lastWalletId && modules.some((m) => m.productId === lastWalletId)) {
+      try {
+        StellarWalletsKit.setWallet(lastWalletId);
+        StellarWalletsKit.fetchAddress()
+          .then(({ address }) => {
+            setAddress(address);
+            setConnected(true);
+          })
+          .catch(() => {
+            // Wallet session expired or not available
+            localStorage.removeItem('lastWalletId');
+          });
+      } catch {
+        localStorage.removeItem('lastWalletId');
+      }
+    }
+
     return () => {
+      unsubWalletSelected();
       unsubState();
       unsubDisconnect();
-      void StellarWalletsKit.disconnect().catch(() => undefined);
     };
-  }, [mode, selectedNetwork, resetState]);
+  }, []); // Mount only - no dependencies
 
-  // ── Context value ──────────────────────────────────────────────────
+  // Update network without reinitializing kit
+  useEffect(() => {
+    StellarWalletsKit.setNetwork(STELLAR_NETWORKS[selectedNetwork].networkPassphrase as Networks);
+  }, [selectedNetwork]);
+
   const value = useMemo(
     () => ({
-      mode,
       address,
       connected,
       connecting,
-      adapter,
       setAddress,
       setConnected,
       setConnecting,
     }),
-    [mode, address, connected, connecting, adapter],
+    [address, connected, connecting],
   );
 
   return <WalletStateContext.Provider value={value}>{children}</WalletStateContext.Provider>;

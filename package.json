@@ -47,8 +47,12 @@
     ]
   },
   "dependencies": {
+    "@creit.tech/stellar-wallets-kit": "^2.1.0",
     "@jsr/creit-tech__stellar-wallets-kit": "^2",
-    "@metamask/connect-stellar": "file:../connect-stellar"
+    "@metamask/connect-stellar": "file:../connect-stellar",
+    "@reown/appkit": "^1.8.19",
+    "@walletconnect/sign-client": "^2.23.9",
+    "@walletconnect/types": "^2.23.9"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
@@ -86,7 +90,14 @@
       "jsdom>ws>bufferutil": false,
       "jsdom>ws>utf-8-validate": false,
       "vitest>vite-node>vite>esbuild": false,
-      "vitest>vite>esbuild": false
+      "vitest>vite>esbuild": false,
+      "@creit.tech/stellar-wallets-kit>@hot-wallet/sdk>@near-js/crypto>secp256k1": false,
+      "@creit.tech/stellar-wallets-kit>@trezor/connect-plugin-stellar>@stellar/stellar-sdk": false,
+      "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/protobuf>protobufjs": false,
+      "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/transport>usb": false,
+      "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/utxo-lib>blake-hash": false,
+      "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/utxo-lib>tiny-secp256k1": false,
+      "@reown/appkit": false
     }
   }
 }
