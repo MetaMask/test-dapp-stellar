@@ -4,7 +4,17 @@ import { WalletConnectModule } from '@creit.tech/stellar-wallets-kit/modules/wal
 import { StellarWalletsKit } from '@creit.tech/stellar-wallets-kit/sdk';
 import { KitEventType, type ModuleInterface, type Networks } from '@creit.tech/stellar-wallets-kit/types';
 import { MetaMaskModule } from '@metamask/connect-stellar';
-import { type FC, type ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import {
+  type FC,
+  type ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { STELLAR_NETWORKS } from '../config';
 import { useNetwork } from './NetworkContext';
 
@@ -45,8 +55,14 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [connected, setConnected] = useState(false);
   const [connecting, setConnecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const addressRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    addressRef.current = address;
+  }, [address]);
 
   const resetState = useCallback((): void => {
+    addressRef.current = null;
     setAddress(null);
     setConnected(false);
     setError(null);
@@ -69,9 +85,51 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
       network: STELLAR_NETWORKS[selectedNetwork].networkPassphrase as Networks,
     });
 
+    // Stellar Wallets Kit 2.1 does not forward a selected module's onChange
+    // callback. Subscribe to each selected module here so wallets such as
+    // MetaMask can keep the dapp's active address in sync.
+    const modulesListeningForChanges = new WeakSet<ModuleInterface>();
+    const subscribeToSelectedWalletChanges = (): void => {
+      let selectedModule: ModuleInterface | undefined;
+      try {
+        selectedModule = StellarWalletsKit.selectedModule;
+      } catch {
+        // No wallet has been selected yet.
+        return;
+      }
+
+      if (!selectedModule?.onChange || modulesListeningForChanges.has(selectedModule)) {
+        return;
+      }
+
+      modulesListeningForChanges.add(selectedModule);
+      selectedModule.onChange((event) => {
+        // The kit cannot unsubscribe from onChange, so ignore events from a
+        // module that is no longer selected.
+        try {
+          if (StellarWalletsKit.selectedModule !== selectedModule) {
+            return;
+          }
+        } catch {
+          return;
+        }
+
+        // Do not establish a connection from an unsolicited wallet event.
+        if (event.error || !event.address || !addressRef.current) {
+          return;
+        }
+
+        setAddress(event.address);
+        setConnected(true);
+      });
+    };
+
     // Track which wallet is selected
     const unsubWalletSelected = StellarWalletsKit.on(KitEventType.WALLET_SELECTED, (event) => {
-      localStorage.setItem('lastWalletId', event.payload.id!);
+      if (event.payload.id) {
+        localStorage.setItem('lastWalletId', event.payload.id);
+      }
+      subscribeToSelectedWalletChanges();
     });
 
     const unsubState = StellarWalletsKit.on(KitEventType.STATE_UPDATED, (event) => {
@@ -84,6 +142,9 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
       localStorage.removeItem('lastWalletId');
       resetState();
     });
+
+    // Also handle a module selected before this effect subscribed to kit events.
+    subscribeToSelectedWalletChanges();
 
     // Restore connection on mount
     const lastWalletId = localStorage.getItem('lastWalletId');
