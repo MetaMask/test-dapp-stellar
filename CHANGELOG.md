@@ -9,13 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.1]
 
-### Uncategorized
-
-- Update README for Stellar test dapp ([#6](https://github.com/MetaMask/test-dapp-stellar/pull/6))
-
 ### Changed
 
-- Replace remaining legacy chain references with Stellar project details.
+- Update README for Stellar test dapp ([#6](https://github.com/MetaMask/test-dapp-stellar/pull/6))
 
 ## [0.1.0]
 
