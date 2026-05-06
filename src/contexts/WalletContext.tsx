@@ -3,6 +3,7 @@ import { LobstrModule } from '@creit.tech/stellar-wallets-kit/modules/lobstr';
 import { WalletConnectModule } from '@creit.tech/stellar-wallets-kit/modules/wallet-connect';
 import { StellarWalletsKit } from '@creit.tech/stellar-wallets-kit/sdk';
 import { KitEventType, type ModuleInterface, type Networks } from '@creit.tech/stellar-wallets-kit/types';
+import { MetaMaskModule } from '@metamask/connect-stellar';
 import { type FC, type ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { STELLAR_NETWORKS } from '../config';
 import { useNetwork } from './NetworkContext';
@@ -51,6 +52,7 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const modules: ModuleInterface[] = [
+      new MetaMaskModule(),
       new FreighterModule(),
       new LobstrModule(),
       ...(WC_PROJECT_ID ? [new WalletConnectModule({ projectId: WC_PROJECT_ID, metadata: WC_METADATA })] : []),
