@@ -1,6 +1,6 @@
-# MetaMask Test Dapp Multichain for Tron
+# MetaMask Test Dapp Multichain for Stellar
 
-A test dapp for the MetaMask Multichain API on Tron.
+A test dapp for the MetaMask Multichain API on Stellar.
 
 ## Prerequisites
 
@@ -13,13 +13,11 @@ A test dapp for the MetaMask Multichain API on Tron.
 
 ```bash
 git clone <repository-url>
-cd test-dapp-tron
+cd test-dapp-stellar
 yarn install
 ```
 
-### 2. Configure Environment Variables (Optional)
-
-For basic testing, you can use the public TronGrid API (rate limited). For production use or higher rate limits, get an API key from [TronGrid](https://www.trongrid.io/).
+### 2. Configure Environment Variables
 
 Copy the example environment file:
 
@@ -27,19 +25,19 @@ Copy the example environment file:
 cp .env.example .env
 ```
 
-If you have a TRON PRO API key, edit the `.env` file:
+Edit the `.env` file:
 
 ```env
-# TRON PRO API Key (optional)
-# Get your API key from: https://www.trongrid.io/
-VITE_TRON_PRO_API_KEY=your-tron-pro-api-key-here
+# Default recipient address for testing transactions (Optional)
+# If not provided, uses a default Stellar test address
+VITE_DEFAULT_RECIPIENT=
 
-# Default recipient address for testing (optional)
-# If not provided, uses a default test address
-VITE_DEFAULT_RECIPIENT=your-custom-test-address
+# WalletConnect Project ID (Required for WalletConnect connector)
+# Get your project ID from: https://cloud.reown.com/
+VITE_WALLETCONNECT_PROJECT_ID=
 ```
 
-**Note**: If no API key is provided, the application will use the public API which has rate limits but works for basic testing.
+**Note**: `VITE_WALLETCONNECT_PROJECT_ID` is only required when testing the WalletConnect connector.
 
 ### 3. Development
 
@@ -61,17 +59,18 @@ yarn build
 
 Once the development server is running, you can:
 
-1. Connect your Tron wallet (TronLink, MetaMask, etc.)
+1. Connect a Stellar wallet (MetaMask, Freighter, LOBSTR, WalletConnect, etc.)
 2. Test message signing functionality
-3. Test TRX transfers
-4. Test USDT TRC-20 transfers
+3. Test USDC transfers
+4. Test Stellar transaction XDR signing
+5. Test Soroban auth entry signing
 
 ## Configuration
 
-The application supports multiple Tron networks:
+The application supports multiple Stellar networks:
 
-- **Mainnet**: Production network
-- **Shasta**: Testnet for development
-- **Nile**: Alternative testnet
+- **Public Network (Mainnet)**: Production network
+- **Testnet**: Test network for development
+- **Futurenet**: Future protocol testing network
 
 Network configuration and contract addresses are managed in `src/config.ts`.
