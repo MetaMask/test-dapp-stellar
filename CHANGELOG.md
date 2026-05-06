@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Replace remaining legacy chain references with Stellar project details.
+
 ## [0.1.0]
 
 ### Added
