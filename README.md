@@ -39,6 +39,9 @@ VITE_WALLETCONNECT_PROJECT_ID=
 
 **Note**: `VITE_WALLETCONNECT_PROJECT_ID` is only required when testing the WalletConnect connector.
 
+The MetaMask Stellar connector is loaded from the local `../connect-stellar` package. Build that package after changes
+so this dapp can consume the latest `dist` output.
+
 ### 3. Development
 
 Start the development server:
@@ -59,10 +62,11 @@ yarn build
 
 Once the development server is running, you can:
 
-1. Connect a Stellar wallet (MetaMask, Freighter, LOBSTR, WalletConnect, etc.)
+1. Connect a Stellar wallet through the wallet modal (MetaMask, Freighter, LOBSTR, WalletConnect, etc.)
 2. Test message signing functionality
 3. Test USDC transfers
-4. Test Stellar transaction XDR signing
+4. Test Stellar transaction XDR signing. The `Load Example XDR` action builds an example transaction from the
+   connected account on the selected network, so the account must be funded on that network.
 5. Test Soroban auth entry signing
 
 ## Configuration

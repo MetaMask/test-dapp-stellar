@@ -7,7 +7,7 @@ import { Account } from './Account';
 import { Button } from './Button';
 
 export const Header: FC = () => {
-  const { address, connected, connecting, connect, disconnect } = useConnect();
+  const { address, connected, connecting, error, connect, disconnect } = useConnect();
   const { selectedNetwork, setSelectedNetwork } = useNetwork();
 
   const handleNetworkChange = useCallback(
@@ -62,7 +62,7 @@ export const Header: FC = () => {
         <div data-testid={dataTestIds.testPage.header.account}>{address ? <Account account={address} /> : 'N/A'}</div>
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
         {connected ? (
           <Button
             data-testid={dataTestIds.testPage.header.disconnect}
@@ -83,6 +83,12 @@ export const Header: FC = () => {
           </Button>
         )}
       </div>
+
+      {error && (
+        <div style={{ gridColumn: '1 / -1', color: '#b71c1c', fontStyle: 'italic', wordBreak: 'break-word' }}>
+          {error}
+        </div>
+      )}
     </div>
   );
 };

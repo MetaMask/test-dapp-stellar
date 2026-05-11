@@ -1,3 +1,4 @@
+import { Asset, Horizon, Operation, TransactionBuilder } from '@stellar/stellar-sdk';
 import { type FC, useCallback, useState } from 'react';
 import { STELLAR_NETWORKS } from '../config';
 import { useNetwork } from '../contexts/NetworkContext';
@@ -6,12 +7,10 @@ import { useSignTransaction } from '../hooks/useSignTransaction';
 import { dataTestIds } from '../test';
 import { Button } from './Button';
 
-/**
- * A minimal hardcoded test XDR for Stellar testnet.
- * You can generate your own at https://laboratory.stellar.org
- */
-const EXAMPLE_TESTNET_XDR =
-  'AAAAAgAAAABzdv3ojkzWHMD7KUoXhrPx0GH18vHKIRmKGmGOVJ0IsQAAAGQADdJPAAAAAgAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAQAAAABzdv3ojkzWHMD7KUoXhrPx0GH18vHKIRmKGmGOVJ0IsQAAAAAAAAAAAJiWgAAAAAAAAAAA';
+const isHorizonNotFoundError = (error: unknown): boolean => {
+  const horizonError = error as { response?: { status?: number }; status?: number };
+  return horizonError.status === 404 || horizonError.response?.status === 404;
+};
 
 export const SignTransaction: FC = () => {
   const { address } = useWalletState();
@@ -20,7 +19,53 @@ export const SignTransaction: FC = () => {
   const [signedTransaction, setSignedTransaction] = useState<string | undefined>();
   const [xdr, setXdr] = useState<string>('');
   const [loading, setLoading] = useState(false);
+  const [loadingExample, setLoadingExample] = useState(false);
   const [error, setError] = useState<string | undefined>();
+
+  /**
+   * Build a signable example transaction for the connected account.
+   */
+  const loadExampleXdr = useCallback(async () => {
+    if (!address) {
+      setError('Connect a Stellar account before loading an example transaction.');
+      return;
+    }
+
+    const networkConfig = STELLAR_NETWORKS[selectedNetwork];
+
+    setError(undefined);
+    setSignedTransaction(undefined);
+    setLoadingExample(true);
+    try {
+      const server = new Horizon.Server(networkConfig.horizonUrl, { allowHttp: true });
+      const sourceAccount = await server.loadAccount(address);
+      const transaction = new TransactionBuilder(sourceAccount, {
+        fee: '100',
+        networkPassphrase: networkConfig.networkPassphrase,
+      })
+        .addOperation(
+          Operation.payment({
+            destination: address,
+            asset: Asset.native(),
+            amount: '0.0000001',
+          }),
+        )
+        .setTimeout(30)
+        .build();
+
+      setXdr(transaction.toXDR());
+    } catch (err) {
+      const message = isHorizonNotFoundError(err)
+        ? `Connected account ${address} is not funded on ${networkConfig.name}. Fund it on this network before loading a signable example transaction.`
+        : err instanceof Error
+          ? err.message
+          : 'Failed to load example transaction';
+      console.error('Load example transaction error:', message);
+      setError(message);
+    } finally {
+      setLoadingExample(false);
+    }
+  }, [address, selectedNetwork]);
 
   /**
    * Sign the transaction using the active wallet.
@@ -78,9 +123,9 @@ export const SignTransaction: FC = () => {
       <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
         <Button
           data-testid={dataTestIds.testPage.signTransaction.loadExampleXdr}
-          onClick={() => {
-            setXdr(EXAMPLE_TESTNET_XDR);
-          }}
+          onClick={loadExampleXdr}
+          disabled={!address}
+          loading={loadingExample}
           style={{ fontSize: '0.875rem' }}
         >
           Load Example XDR

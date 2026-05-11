@@ -1009,6 +1009,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@metamask/connect-stellar@portal:../connect-stellar::locator=%40metamask%2Ftest-dapp-stellar%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@metamask/connect-stellar@portal:../connect-stellar::locator=%40metamask%2Ftest-dapp-stellar%40workspace%3A."
+  dependencies:
+    "@metamask/multichain-api-client": "npm:^0.11.0"
+  languageName: node
+  linkType: soft
+
+"@metamask/multichain-api-client@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "@metamask/multichain-api-client@npm:0.11.0"
+  checksum: 10/fee3751b8bfdce08db37be205aa2d78de6544060ccbe57ff790ddf9c0aad830ee6cfb1844e4ea838ce97f0b7851badd0271cb0ec32ac42d3f7d4cfa15ccb1298
+  languageName: node
+  linkType: hard
+
 "@metamask/test-dapp-stellar@workspace:.":
   version: 0.0.0-use.local
   resolution: "@metamask/test-dapp-stellar@workspace:."
@@ -1018,6 +1033,7 @@ __metadata:
     "@lavamoat/allow-scripts": "npm:^3.0.4"
     "@lavamoat/preinstall-always-fail": "npm:^2.0.0"
     "@metamask/auto-changelog": "npm:^5.0.1"
+    "@metamask/connect-stellar": "portal:../connect-stellar"
     "@reown/appkit": "npm:^1.8.19"
     "@stellar/stellar-sdk": "npm:^15.0.1"
     "@testing-library/dom": "npm:^10.4.0"
