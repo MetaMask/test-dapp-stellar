@@ -103,6 +103,7 @@
       "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/utxo-lib>blake-hash": false,
       "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/utxo-lib>tiny-secp256k1": false,
       "@reown/appkit": false,
+      "@creit.tech/stellar-wallets-kit>@reown/appkit": false,
       "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/blockchain-link-utils>@stellar/stellar-sdk": false,
       "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/blockchain-link>@stellar/stellar-sdk": false,
       "@creit.tech/stellar-wallets-kit>@trezor/connect-web>@trezor/connect>@trezor/blockchain-link>@trezor/blockchain-link-utils>@stellar/stellar-sdk": false
