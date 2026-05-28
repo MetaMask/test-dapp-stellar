@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0]
+
+### Uncategorized
+
+- Add MetaMask Stellar signing support ([#10](https://github.com/MetaMask/test-dapp-stellar/pull/10))
+
 ## [0.1.1]
 
 ### Changed
@@ -23,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Sign Auth Entry (Soroban) test flow ([#2](https://github.com/MetaMask/test-dapp-stellar/pull/2))
 - Add Send USDC test flow ([#2](https://github.com/MetaMask/test-dapp-stellar/pull/2))
 
-[Unreleased]: https://github.com/MetaMask/test-dapp-stellar/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/MetaMask/test-dapp-stellar/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/MetaMask/test-dapp-stellar/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/MetaMask/test-dapp-stellar/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/MetaMask/test-dapp-stellar/releases/tag/v0.1.0
