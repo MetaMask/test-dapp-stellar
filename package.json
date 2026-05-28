@@ -1,6 +1,6 @@
 {
   "name": "@metamask/test-dapp-stellar",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "license": "ISC",
   "description": "A test dapp for Stellar MetaMask integration",
   "homepage": "https://metamask.github.io/test-dapp-stellar",
