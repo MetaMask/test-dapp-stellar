@@ -1,3 +1,4 @@
+import { StrKey } from '@stellar/stellar-sdk';
 import { type ChangeEvent, type FC, useCallback, useState } from 'react';
 import { DEFAULT_RECIPIENT, USDC_ISSUERS } from '../config';
 import { useNetwork } from '../contexts/NetworkContext';
@@ -42,8 +43,15 @@ export const SendUsdc: FC = () => {
       return;
     }
 
-    if (!toAddress.trim()) {
+    const recipientAddress = toAddress.trim();
+
+    if (!recipientAddress) {
       setError('Recipient address is required');
+      return;
+    }
+
+    if (!StrKey.isValidEd25519PublicKey(recipientAddress)) {
+      setError('Recipient address is invalid');
       return;
     }
 
@@ -63,7 +71,7 @@ export const SendUsdc: FC = () => {
       const result = await transfer({
         tokenCode: 'USDC',
         tokenIssuer: usdcIssuer,
-        recipientAddress: toAddress,
+        recipientAddress,
         amount,
       });
 

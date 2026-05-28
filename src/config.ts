@@ -22,12 +22,11 @@ export const STELLAR_NETWORKS = {
 export type NetworkKey = keyof typeof STELLAR_NETWORKS;
 
 /**
- * USDC contract addresses on Stellar networks
+ * USDC asset issuer public keys on Stellar networks.
  */
-export const USDC_ISSUERS: Record<NetworkKey, string> = {
-  pubnet: 'GBUQWP3BOUZX34ULNQG23RQ6F4YUSXHTQSXUSMIQ4B2LAMSTFSRXUUF',
-  testnet: 'GBBD47UZQ5IOYQA6MKGA74AYEKP4UXE7DDKWUV7IGVJXW3YYQXK4BYC2',
-  futurenet: 'GBUQWP3BOUZX34ULNQG23RQ6F4YUSXHTQSXUSMIQ4B2LAMSTFSRXUUF',
+export const USDC_ISSUERS: Partial<Record<NetworkKey, string>> = {
+  pubnet: 'GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN',
+  testnet: 'GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5',
 };
 
 /**

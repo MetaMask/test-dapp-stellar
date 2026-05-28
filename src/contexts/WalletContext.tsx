@@ -3,6 +3,7 @@ import { LobstrModule } from '@creit.tech/stellar-wallets-kit/modules/lobstr';
 import { WalletConnectModule } from '@creit.tech/stellar-wallets-kit/modules/wallet-connect';
 import { StellarWalletsKit } from '@creit.tech/stellar-wallets-kit/sdk';
 import { KitEventType, type ModuleInterface, type Networks } from '@creit.tech/stellar-wallets-kit/types';
+import { MetaMaskModule } from '@metamask/connect-stellar';
 import { type FC, type ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { STELLAR_NETWORKS } from '../config';
 import { useNetwork } from './NetworkContext';
@@ -20,9 +21,11 @@ export interface WalletStateContextValue {
   address: string | null;
   connected: boolean;
   connecting: boolean;
+  error: string | null;
   setAddress: (addr: string | null) => void;
   setConnected: (v: boolean) => void;
   setConnecting: (v: boolean) => void;
+  setError: (v: string | null) => void;
 }
 
 const WalletStateContext = createContext<WalletStateContextValue | undefined>(undefined);
@@ -41,16 +44,19 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [address, setAddress] = useState<string | null>(null);
   const [connected, setConnected] = useState(false);
   const [connecting, setConnecting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const resetState = useCallback((): void => {
     setAddress(null);
     setConnected(false);
+    setError(null);
   }, []);
 
   // Initialize kit once on mount
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const modules: ModuleInterface[] = [
+      new MetaMaskModule(),
       new FreighterModule(),
       new LobstrModule(),
       ...(WC_PROJECT_ID ? [new WalletConnectModule({ projectId: WC_PROJECT_ID, metadata: WC_METADATA })] : []),
@@ -94,6 +100,8 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
       } catch {
         localStorage.removeItem('lastWalletId');
       }
+    } else if (lastWalletId) {
+      localStorage.removeItem('lastWalletId');
     }
 
     return () => {
@@ -105,7 +113,8 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   // Update network without reinitializing kit
   useEffect(() => {
-    StellarWalletsKit.setNetwork(STELLAR_NETWORKS[selectedNetwork].networkPassphrase as Networks);
+    const networkPassphrase = STELLAR_NETWORKS[selectedNetwork].networkPassphrase;
+    StellarWalletsKit.setNetwork(networkPassphrase as Networks);
   }, [selectedNetwork]);
 
   const value = useMemo(
@@ -113,11 +122,13 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
       address,
       connected,
       connecting,
+      error,
       setAddress,
       setConnected,
       setConnecting,
+      setError,
     }),
-    [address, connected, connecting],
+    [address, connected, connecting, error],
   );
 
   return <WalletStateContext.Provider value={value}>{children}</WalletStateContext.Provider>;
