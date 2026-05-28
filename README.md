@@ -39,9 +39,6 @@ VITE_WALLETCONNECT_PROJECT_ID=
 
 **Note**: `VITE_WALLETCONNECT_PROJECT_ID` is only required when testing the WalletConnect connector.
 
-The MetaMask Stellar connector is loaded from the local `../connect-stellar` package. Build that package after changes
-so this dapp can consume the latest `dist` output.
-
 ### 3. Development
 
 Start the development server:
