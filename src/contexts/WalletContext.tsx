@@ -8,7 +8,7 @@ import { type FC, type ReactNode, createContext, useCallback, useContext, useEff
 import { STELLAR_NETWORKS } from '../config';
 import { useNetwork } from './NetworkContext';
 
-const WC_PROJECT_ID = (import.meta.env.VITE_WALLETCONNECT_PROJECT_ID as string | undefined) ?? '';
+const WALLETCONNECT_PROJECT_ID = (import.meta.env.VITE_WALLETCONNECT_PROJECT_ID as string | undefined) ?? '';
 
 const WC_METADATA = {
   name: 'MetaMask Stellar Test DApp',
@@ -52,14 +52,16 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setError(null);
   }, []);
 
-  // Initialize kit once on mount
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  const isMainnet = selectedNetwork === 'pubnet';
+
+  // Initialize kit on mount and when switching to/from mainnet (WalletConnect is mainnet-only)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: selectedNetwork sync is handled by the effect below
   useEffect(() => {
     const modules: ModuleInterface[] = [
       new MetaMaskModule(),
       new FreighterModule(),
       new LobstrModule(),
-      ...(WC_PROJECT_ID ? [new WalletConnectModule({ projectId: WC_PROJECT_ID, metadata: WC_METADATA })] : []),
+      ...(isMainnet ? [new WalletConnectModule({ projectId: WALLETCONNECT_PROJECT_ID, metadata: WC_METADATA })] : []),
     ];
 
     StellarWalletsKit.init({
@@ -109,7 +111,7 @@ export const WalletProvider: FC<{ children: ReactNode }> = ({ children }) => {
       unsubState();
       unsubDisconnect();
     };
-  }, []); // Mount only - no dependencies
+  }, [isMainnet]);
 
   // Update network without reinitializing kit
   useEffect(() => {
