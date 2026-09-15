@@ -32,7 +32,7 @@ export const USDC_ISSUERS: Partial<Record<NetworkKey, string>> = {
 /**
  * The default network to use in the tests.
  */
-export const DEFAULT_NETWORK: NetworkKey = 'testnet';
+export const DEFAULT_NETWORK: NetworkKey = 'pubnet';
 
 /**
  * Get the default network key.
