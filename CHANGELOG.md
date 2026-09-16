@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.3.0]
 
-### Uncategorized
+### Added
 
 - feat: manage account switching ([#5](https://github.com/MetaMask/test-dapp-stellar/pull/5))
 - chore: migrate npm publishing to trusted publishing ([#14](https://github.com/MetaMask/test-dapp-stellar/pull/14))
