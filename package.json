@@ -50,12 +50,12 @@
     ]
   },
   "dependencies": {
-    "@creit.tech/stellar-wallets-kit": "^2.1.0",
-    "@metamask/connect-stellar": "^0.2.0",
+    "@creit.tech/stellar-wallets-kit": "^2.6.0",
+    "@metamask/connect-stellar": "0.3.0",
     "@reown/appkit": "^1.8.19",
-    "@stellar/stellar-sdk": "^15.0.1",
-    "@walletconnect/sign-client": "^2.23.9",
-    "@walletconnect/types": "^2.23.9",
+    "@stellar/stellar-sdk": "^17.1.0",
+    "@walletconnect/sign-client": "^2.25.0",
+    "@walletconnect/types": "^2.25.0",
     "depcheck": "^1.4.7"
   },
   "devDependencies": {
