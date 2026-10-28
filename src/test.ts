@@ -37,6 +37,7 @@ export const dataTestIds = pathifyObject({
       disconnect: true,
       account: true,
       connectionStatus: true,
+      metamaskReady: true,
       walletModeToggle: true,
     },
     signMessage: {
