@@ -46,3 +46,12 @@ export const getDefaultNetworkKey = (): NetworkKey => DEFAULT_NETWORK;
 export const DEFAULT_RECIPIENT =
   (import.meta.env.VITE_DEFAULT_RECIPIENT as string | undefined) ??
   'GAAZI4TCR3TY5OJHCTJC2A4QSY6CJWJH5IAJTGKIN2ER7LBNVKOCCWN';
+
+/**
+ * Default SEP-41 contract id used when building CAP-84 muxed-contract (`W…`)
+ * transfer XDRs for MetaMask confirmation testing. Any well-formed `C…` works
+ * for sign-only flows; override with VITE_DEFAULT_SEP41_CONTRACT_ID if needed.
+ */
+export const DEFAULT_SEP41_CONTRACT_ID =
+  (import.meta.env.VITE_DEFAULT_SEP41_CONTRACT_ID as string | undefined) ??
+  'CASUP2OPFVEHCWGP2XLBXOV7DQIQIT42AQISG4MXAZGNLVFFN63X7WRT';
