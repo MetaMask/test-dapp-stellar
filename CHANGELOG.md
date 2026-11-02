@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add SEP-41 transfer signing card with CAP-84 muxed contract (`W…`) destinations for MetaMask confirmation testing
+
+### Changed
+
+- Bump `@stellar/stellar-sdk` from `^17.1.0` to `^17.4.0`
+
 ## [0.4.0]
 
 ### Added

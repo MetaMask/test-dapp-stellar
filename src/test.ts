@@ -66,5 +66,17 @@ export const dataTestIds = pathifyObject({
       sendUsdc: true,
       hash: true,
     },
+    signSep41MuxedTransfer: {
+      id: true,
+      contractId: true,
+      muxId: true,
+      amount: true,
+      previewDestination: true,
+      buildXdr: true,
+      signTransaction: true,
+      builtDestination: true,
+      xdr: true,
+      signedTransaction: true,
+    },
   },
 } as const);

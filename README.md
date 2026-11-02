@@ -63,7 +63,8 @@ Once the development server is running, you can:
 2. Test message signing functionality
 3. Test USDC transfers
 4. Test Stellar transaction XDR signing. The `Load Example XDR` action builds an example transaction from the connected account on the selected network, so the account must be funded on that network.
-5. Test Soroban auth entry signing
+5. Test SEP-41 `transfer` signing with a CAP-84 muxed contract destination (`W…`). Build the XDR, then sign to exercise MetaMask confirmation parsing. Sign-only — it does not submit. The connected account must be funded on the selected network.
+6. Test Soroban auth entry signing
 
 ## Configuration
 
